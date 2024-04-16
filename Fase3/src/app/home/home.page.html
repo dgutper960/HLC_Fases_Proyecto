@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Ejemplo Firestore </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Creamos los imputs para los valores de las nuevas tareas -->
+  <!-- Input del titulo -->
+  <ion-item>
+    <ion-label>Titulo</ion-label>
+    <ion-input [(ngModel)]="tareaEditando.titulo"></ion-input>
+  </ion-item>
+  <!-- Input de la descripción -->
+  <ion-item>
+    <ion-label>Descripción</ion-label>
+    <ion-input [(ngModel)]="tareaEditando.descripcion"></ion-input>
+  </ion-item>
+
+  <!-- Boton para añadir tareas -->
+  <ion-button (click)="clickBotonInsertar()">Añadir Tarea</ion-button>
+
+  <!-- Mostramos la lista de tareas -->
+  <h1>LISTA DE TAREAS</h1>
+  <ion-list>
+    <!-- Recorremos el array y guardamos cada elemento en una variable -->
+    <ion-item *ngFor="let documentTarea of arrayColleccionTareas">
+      <!-- Creamos un grid -->
+      <ion-grid>
+        <!-- Creamos un contenedor para cada tarea -->
+        <!-- Asociamos cada tarea al evento click que llama al metodo selectTarea()  -->
+        <!-- Como entrada del método, necesitamos el id de la tarea que se ha seleccionado -->
+        <div class="tarea" (click)="selectTarea(documentTarea.id)">
+          <!-- fila para el titulo de la tarea -->
+          <ion-row>
+            <h2>Título: {{ documentTarea.data.titulo }}</h2>
+          </ion-row>
+          <!-- fila para la descripción de la tarea -->
+          <ion-row>
+            <p>Descripción: {{ documentTarea.data.descripcion }}</p>
+          </ion-row>
+        </div>
+      
+      </ion-grid>
+    </ion-item>
+  </ion-list>
+</ion-content>
