@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router'
+import { Tarea } from '../tarea';
 
 @Component({
   selector: 'app-detalle',
@@ -11,7 +12,18 @@ export class DetallePage implements OnInit {
   // Variable que almacena el id
   idTarea: string = "";
 
-  constructor(private activateRoute: ActivatedRoute) { }
+  // Variable que recoge los datos de la consulta
+  // Necesitamos dos propiedades en la variable
+  document: any = {
+    id: "",
+    data: {} as Tarea // debemos importar Tarea
+  };
+
+  constructor(private activateRoute: ActivatedRoute) { 
+
+    
+
+  }
 
   ngOnInit() {
     // Almacenamos el id de la ruta en nuestra variable de la clase

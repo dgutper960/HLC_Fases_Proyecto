@@ -7,13 +7,23 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 export class FirestoreService {
   constructor(private angularFirestore: AngularFirestore) { }
 
-  public insertar(coleccion, datos) {
+  // Inserta el registro de una nueva tarea
+  // entrada -> coleccion, datos
+  public insertar(coleccion: string, datos: any) {
     return this.angularFirestore.collection(coleccion).add(datos)
   }
 
-  public consultar(collection){
+  // Obtiene la lista de una coleccion
+  // entrada -> coleccion
+  public consultar(collection: any) {
     return this.angularFirestore.collection(collection).snapshotChanges();
   }
+
+  // Obtiene los detalles de una tarea por id
+  // entrada -> coleccion, idTarea
+ public consultarPorId(coleccion: string, documentId:string){
+  return this.angularFirestore.collection(coleccion).doc(documentId).snapshotChanges();
+ }
 
 }
 
