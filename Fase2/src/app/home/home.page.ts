@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 // Importaciones a ficheros de nuestro proyecto
 import { Tarea } from '../tarea';
 import { FirestoreService } from '../firestore.service';
@@ -17,8 +18,10 @@ export class HomePage {
     id: "",
     data: {} as Tarea
   }];
+  // Propiedad que almacena el id de la tarea seleccionada
+  idTareaSelec: string;
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(private firestoreService: FirestoreService, private router: Router) {
     // Crea una tarea vacía al empezar
     this.tareaEditando = {} as Tarea;
 
@@ -42,10 +45,10 @@ export class HomePage {
   }
 
   // Método que obtiene la lista de tareas
-  obtenerListaTareas(){
-    this.firestoreService.consultar("tareas").subscribe((resultadoConsultaTareas)=>{
+  obtenerListaTareas() {
+    this.firestoreService.consultar("tareas").subscribe((resultadoConsultaTareas) => {
       this.arrayColleccionTareas = [];
-      resultadoConsultaTareas.forEach((datosTarea: any)=>{
+      resultadoConsultaTareas.forEach((datosTarea: any) => {
         this.arrayColleccionTareas.push({
           id: datosTarea.payload.doc.id,
           data: datosTarea.payload.doc.data()
@@ -53,4 +56,14 @@ export class HomePage {
       })
     })
   }
+
+  // Método que selecciona la tarea para enviar datos al enrrutamiento
+  // Como entrada, tenemos el di de la tarea en ese momento del bucle
+  selectTarea(idTarea: string) {
+    // almacenamos el valor en una variable de la clase
+    this.idTareaSelec = idTarea;
+    // Mandamos al usuario a la ruta indicada
+    this.router.navigate(['/detalle', this.idTareaSelec]);
+  }
+
 }
