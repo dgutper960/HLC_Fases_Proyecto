@@ -5,7 +5,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
-  <h1> id: {{idTarea}}</h1>
+  
+    <h1> id: {{ idTarea }}</h1>
+    <h1 *ngIf="document.data && document.data.titulo"> titulo: {{ document.data.titulo }} </h1>
 
 </ion-content>
