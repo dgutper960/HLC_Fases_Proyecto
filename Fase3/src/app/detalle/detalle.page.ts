@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+// Importaciones desde nuestro proyecto
 import { Tarea } from '../tarea';
 import { FirestoreService } from '../firestore.service';
 
+// Definimos una Interfaz con la estructura de datos que se espera
 interface Documento {
   id: string;
   data: Tarea;
@@ -14,7 +16,10 @@ interface Documento {
   styleUrls: ['./detalle.page.scss'],
 })
 export class DetallePage implements OnInit {
+
+  // Almacenaremos el id obtenido por URL
   idTarea: string = "";
+  // Aquí alamacebnaremos los datos obtenidos
   document: Documento = { id: "", data: {} as Tarea };
 
   constructor(private firestoreService: FirestoreService, private activateRoute: ActivatedRoute) {}
