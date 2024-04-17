@@ -19,7 +19,7 @@ export class DetallePage implements OnInit {
 
   // Almacenaremos el id obtenido por URL
   idTarea: string = "";
-  // Aquí alamacebnaremos los datos obtenidos
+  // Aquí alamacenaremos los datos obtenidos
   document: Documento = { id: "", data: {} as Tarea };
 
   constructor(private firestoreService: FirestoreService, private activateRoute: ActivatedRoute) {}
