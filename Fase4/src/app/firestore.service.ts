@@ -19,11 +19,20 @@ export class FirestoreService {
     return this.angularFirestore.collection(collection).snapshotChanges();
   }
 
+  public actualzar(colection, documentId, datos){
+    return this.angularFirestore.collection(colection).doc(documentId).set(datos);
+  }
+
+  public borrar(colection, documentId){
+    return this.angularFirestore.collection(colection).doc(documentId).delete();
+  }
+
   // Obtiene los detalles de una tarea por id
   // entrada -> coleccion, idTarea
  public consultarPorId(coleccion: string, documentId:string){
   return this.angularFirestore.collection(coleccion).doc(documentId).snapshotChanges();
  }
+
 
 }
 

@@ -22,10 +22,10 @@
 
   <!-- Boton para añadir tareas -->
   <ion-button (click)="clickBotonInsertar()" >Añadir Tarea</ion-button>
-  <!-- Boton para editar tarea -->
+  <!-- Boton para editar tarea, visible si existe tarea seleccionada -->
   <ion-button *ngIf="idTareaSelec" (click)="clickBotonEditar()" >Editar Tarea</ion-button>
-  <!-- Boton para borrar tarea -->
-  <ion-button *ngIf="idTareaSelec"  (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
+  <!-- Boton para borrar tarea, visible si existe tarea seleccionada  -->
+  <ion-button *ngIf="idTareaSelec" (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
 
   <!-- Mostramos la lista de tareas -->
   <h1>LISTA DE TAREAS</h1>

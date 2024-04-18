@@ -13,13 +13,14 @@ export class HomePage {
 
   // Podemos declarar propiedades del tipo Tarea 
   tareaEditando: Tarea;
+  // Propiedad que almacena el id de la tarea seleccionada
+  idTareaSelec: string;
   // Propieded que almacena los datos retornados por consultar()
   arrayColleccionTareas: any = [{
     id: "",
     data: {} as Tarea
   }];
-  // Propiedad que almacena el id de la tarea seleccionada
-  idTareaSelec: string;
+
 
   constructor(private firestoreService: FirestoreService, private router: Router) {
     // Crea una tarea vacía al empezar
@@ -57,9 +58,39 @@ export class HomePage {
     })
   }
 
+  // Edita la tarea seleccionada
+  clickBotonEditar() {
+    this.firestoreService.actualzar("tareas", this.idTareaSelec, this.tareaEditando).then(() => {
+      // Actualizar lista
+      this.obtenerListaTareas();
+      // Limpiar los datos de pantalla
+      this.tareaEditando = {} as Tarea;
+    })
+  }
+
+  // Borrar tarea seleccinada al hacer click en el boton borrar
+  clickBotonBorrar() {
+    this.firestoreService.borrar("tareas", this.idTareaSelec).then(() => {
+      // Actualizar la lista
+      this.obtenerListaTareas();
+      // Limpiar los datos de pantalla
+      this.tareaEditando = {} as Tarea;
+    })
+  }
+
+  // Selecciona Tarea al hacer click
+  selecTarea(tareaSelec) {
+    // mensaje depuración
+    console.log(`Tarea seleccionada: ${tareaSelec}`);
+    // Asignamos los valores de la tarea seleccionada a las proiedades de la clase
+    this.idTareaSelec = tareaSelec.id;
+    this.tareaEditando.titulo = tareaSelec.data.titulo;
+    this.tareaEditando.descripcion = tareaSelec.data.descripcion;
+  }
+
   // Método que selecciona la tarea para enviar datos al enrrutamiento
   // Como entrada, tenemos el di de la tarea en ese momento del bucle
-  selectTarea(idTarea: string) {
+  selectTarea2(idTarea: string) {
     // almacenamos el valor en una variable de la clase
     this.idTareaSelec = idTarea;
     // Mandamos al usuario a la ruta indicada
