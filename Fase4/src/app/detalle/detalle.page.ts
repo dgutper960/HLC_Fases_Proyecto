@@ -22,6 +22,16 @@ export class DetallePage implements OnInit {
   // Aquí alamacenaremos los datos obtenidos
   document: Documento = { id: "", data: {} as Tarea };
 
+    // Podemos declarar propiedades del tipo Tarea 
+  tareaEditando: Tarea;
+  // Propiedad que almacena el id de la tarea seleccionada
+  idTareaSelec: string;
+  // Propieded que almacena los datos retornados por consultar()
+  arrayColleccionTareas: any = [{
+    id: "",
+    data: {} as Tarea
+  }];
+
   constructor(private firestoreService: FirestoreService, private activateRoute: ActivatedRoute) {}
 
   ngOnInit() {
@@ -46,4 +56,50 @@ export class DetallePage implements OnInit {
       }
     })
   }
+
+  // Añadimos funciones para Editar y Borrar
+
+  // Método que obtiene la lista de tareas
+  obtenerListaTareas() {
+    this.firestoreService.consultar("tareas").subscribe((resultadoConsultaTareas) => {
+      this.arrayColleccionTareas = [];
+      resultadoConsultaTareas.forEach((datosTarea: any) => {
+        this.arrayColleccionTareas.push({
+          id: datosTarea.payload.doc.id,
+          data: datosTarea.payload.doc.data()
+        })
+      })
+    })
+  }
+
+  // Edita la tarea seleccionada
+  clickBotonEditar() {
+    this.firestoreService.actualzar("tareas", this.idTareaSelec, this.tareaEditando).then(() => {
+      // Actualizar lista
+      this.obtenerListaTareas();
+      // Limpiar los datos de pantalla
+      this.tareaEditando = {} as Tarea;
+    })
+  }
+
+  // Borrar tarea seleccinada al hacer click en el boton borrar
+  clickBotonBorrar() {
+    this.firestoreService.borrar("tareas", this.idTareaSelec).then(() => {
+      // Actualizar la lista
+      this.obtenerListaTareas();
+      // Limpiar los datos de pantalla
+      this.tareaEditando = {} as Tarea;
+    })
+  }
+
+  // Selecciona Tarea al hacer click
+  selecTarea(tareaSelec) {
+    // mensaje depuración
+    console.log(`Tarea seleccionada: ${tareaSelec}`);
+    // Asignamos los valores de la tarea seleccionada a las proiedades de la clase
+    this.idTareaSelec = tareaSelec.id;
+    this.tareaEditando.titulo = tareaSelec.data.titulo;
+    this.tareaEditando.descripcion = tareaSelec.data.descripcion;
+  }
+
 }
