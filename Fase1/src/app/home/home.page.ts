@@ -12,6 +12,8 @@ export class HomePage {
 
   // Podemos declarar propiedades del tipo Tarea 
   tareaEditando: Tarea;
+  // Almacenamos id de tarea seleccionada
+  idTareaSelec: string;
   // Propieded que almacena los datos retornados por consultar()
   arrayColleccionTareas: any = [{
     id: "",
@@ -53,4 +55,35 @@ export class HomePage {
       })
     })
   }
+
+  // Selecciona Tarea al hacer click
+  selecTarea(tareaSelec){
+    // mensaje depuración
+    console.log(`Tarea seleccionada: ${tareaSelec}`);
+    // Asignamos los valores de la tarea seleccionada a las proiedades de la clase
+    this.idTareaSelec = tareaSelec.id;
+    this.tareaEditando.titulo = tareaSelec.data.titulo; 
+    this.tareaEditando.descripcion = tareaSelec.data.descripcion; 
+  }
+
+  // Edita la tarea seleccionada
+  clickBotonEditar(){
+    this.firestoreService.actualzar("tareas", this.idTareaSelec, this.tareaEditando).then(()=>{
+      // Actualizar lista
+      this.obtenerListaTareas();
+      // Limpiar los datos de pantalla
+      this.tareaEditando = {} as Tarea;
+    })
+  }
+
+  // Borrar tarea seleccinada al hacer click en el boton borrar
+  clickBotonBorrar(){
+    this.firestoreService.borrar("tareas", this.idTareaSelec).then(()=>{
+      // Actualizar la lista
+      this.obtenerListaTareas();
+      // Limpiar los datos de pantalla
+      this.tareaEditando = {} as Tarea;
+    })
+  }
+
 }
