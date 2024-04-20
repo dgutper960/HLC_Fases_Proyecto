@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 // Importaciones a ficheros de nuestro proyecto
 import { Tarea } from '../tarea';
 import { FirestoreService } from '../firestore.service';
+
 
 @Component({
   selector: 'app-home',
@@ -20,10 +22,9 @@ export class HomePage {
     data: {} as Tarea
   }];
 
-  constructor(private firestoreService: FirestoreService) {
+  constructor(private router: Router, private firestoreService: FirestoreService) {
     // Crea una tarea vacía al empezar
     this.tareaEditando = {} as Tarea;
-
     // Llamada a obtenerListaTareas() para cargar la lista de tareas nada más empezar
     this.obtenerListaTareas();
   }
@@ -64,6 +65,8 @@ export class HomePage {
     this.idTareaSelec = tareaSelec.id;
     this.tareaEditando.titulo = tareaSelec.data.titulo; 
     this.tareaEditando.descripcion = tareaSelec.data.descripcion; 
+    // Redirigimos al usuario a /detalle
+    this.router.navigate(['/detalle', this.idTareaSelec]);
   }
 
   // Edita la tarea seleccionada
