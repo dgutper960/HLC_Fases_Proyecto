@@ -47,10 +47,8 @@ export class DetallePage implements OnInit {
 
   // Edita la tarea seleccionada
   clickBotonEditar() {
+    // Actualizamos la tarea
     this.firestoreService.actualzar("tareas", this.document.id, this.document.data).then(() => {
-      // Limpiar los datos de pantalla
-      this.document = {} as Tarea;
-
       // Redirigimos al usuario a /home
       this.router.navigate(['/home']);
     })
@@ -58,9 +56,8 @@ export class DetallePage implements OnInit {
 
   // Borrar tarea seleccinada al hacer click en el boton borrar
   clickBotonBorrar() {
+    // Actualizamos la tarea
     this.firestoreService.borrar("tareas", this.document.id).then(() => {
-      // Limpiar los datos de pantalla
-      this.document = {} as Tarea;
       // Redirigimos al usuario a /home
       this.router.navigate(['/home']);
     })
