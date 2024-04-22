@@ -29,21 +29,6 @@ export class HomePage {
     this.obtenerListaTareas();
   }
 
-  clickBotonInsertar() {
-    // Accedemos al método insretar de la interface implementada en firestore.service.ts
-    // Recordamos sus parámetros de entrada
-    // Como segundo parámetro, pondremos el valor de tareaEditando con una promesa
-    this.firestoreService.insertar("tareas", this.tareaEditando)
-      .then(() => {
-        console.log("Tarea creada correctamente");
-        // Limpiamos el contenido de la tarea que se estaba editando
-        this.tareaEditando = {} as Tarea;
-      }, (error) => {
-        // en caso de error
-        console.error(error)
-      });
-  }
-
   // Método que obtiene la lista de tareas
   obtenerListaTareas(){
     this.firestoreService.consultar("tareas").subscribe((resultadoConsultaTareas)=>{
@@ -69,24 +54,14 @@ export class HomePage {
     this.router.navigate(['/detalle', this.idTareaSelec]);
   }
 
-  // Edita la tarea seleccionada
-  clickBotonEditar(){
-    this.firestoreService.actualzar("tareas", this.idTareaSelec, this.tareaEditando).then(()=>{
-      // Actualizar lista
-      this.obtenerListaTareas();
-      // Limpiar los datos de pantalla
-      this.tareaEditando = {} as Tarea;
-    })
-  }
-
-  // Borrar tarea seleccinada al hacer click en el boton borrar
-  clickBotonBorrar(){
-    this.firestoreService.borrar("tareas", this.idTareaSelec).then(()=>{
-      // Actualizar la lista
-      this.obtenerListaTareas();
-      // Limpiar los datos de pantalla
-      this.tareaEditando = {} as Tarea;
-    })
+  // Redirecciona a detalle para añadir nueva tarea
+  clickAddTarea(){
+    // limpiamos las tareas seleccinadas 
+    this.idTareaSelec = "Insertando";
+    this.tareaEditando.titulo = ""; 
+    this.tareaEditando.descripcion = "";
+    // Redirigimos a /detalle
+    this.router.navigate(['/detalle', this.idTareaSelec]);
   }
 
 }

@@ -6,27 +6,31 @@
 
 <ion-content [fullscreen]="true">
 
-  <h1>id de la tarea {{id}}</h1>
 
-  <h2>Datos de la tarea</h2>
-  <h2>{{document.data.titulo}}</h2>
-  <h2>{{document.data.descripcion}}</h2>
 
+  <h1>Datos de la tarea seleccionada</h1>
+  <h1>ID: {{id}}</h1>
+  <h2>Titulo: {{document.data.titulo}}</h2>
+  <h2>Descripción: {{document.data.descripcion}}</h2>
+  <br>
+  <h1>Tarea en edición: </h1>
     <!-- Input del titulo -->
     <ion-item>
-      <ion-label>Titulo</ion-label>
+      <ion-label><b>Titulo</b></ion-label>
       <ion-input [(ngModel)]="document.data.titulo"></ion-input>
     </ion-item>
   <!-- Input de la descripción -->
     <ion-item>
-      <ion-label>Descripción</ion-label>
+      <ion-label><b>Descripción</b></ion-label>
       <ion-input [(ngModel)]="document.data.descripcion"></ion-input>
     </ion-item>
 
+    <!-- Boton para insertar tarea, visible si se pulsó el boton + en home -->
+    <ion-button *ngIf="id==='Insertando'" (click)="clickBotonInsertar()" >Insertar Tarea</ion-button>
     <!-- Boton para editar tarea, visible si existe tarea seleccionada -->
-    <ion-button (click)="clickBotonEditar()" >Editar Tarea</ion-button>
+    <ion-button *ngIf="id!=='Insertando'" (click)="clickBotonEditar()" >Editar Tarea</ion-button>
     <!-- Boton para borrar tarea, visible si existe tarea seleccionada  -->
-    <ion-button (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
+    <ion-button *ngIf="id!=='Insertando'" (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
 
 
 </ion-content>

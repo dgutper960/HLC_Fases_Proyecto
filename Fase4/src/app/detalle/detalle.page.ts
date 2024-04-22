@@ -20,7 +20,7 @@ export class DetallePage implements OnInit {
     data: {} as Tarea
   };
 
-  constructor(private router:Router, private activatedRouter: ActivatedRoute, private firestoreService: FirestoreService) { }
+  constructor(private router: Router, private activatedRouter: ActivatedRoute, private firestoreService: FirestoreService) { }
 
   ngOnInit() {
     // // Almacenamos el id recibido de home
@@ -43,6 +43,24 @@ export class DetallePage implements OnInit {
         this.document.data = {} as Tarea;
       }
     })
+  }
+
+  // Edita la tarea seleccionada
+  clickBotonInsertar() {
+    // Accedemos al método insretar de la interface implementada en firestore.service.ts
+    // Recordamos sus parámetros de entrada
+    // Como segundo parámetro, pondremos el valor de este document.data con una promesa
+    this.firestoreService.insertar("tareas", this.document.data)
+      .then(() => {
+        console.log("Tarea creada correctamente");
+        // Limpiamos el contenido de la tarea que se estaba editando
+        this.document.data = {} as Tarea;
+      }, (error) => {
+        // en caso de error
+        console.error(error)
+      });
+    // Redirigimos al usuario a /home
+    this.router.navigate(['/home']);
   }
 
   // Edita la tarea seleccionada

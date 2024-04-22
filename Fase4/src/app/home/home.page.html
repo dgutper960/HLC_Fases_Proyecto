@@ -20,12 +20,6 @@
     <ion-input [(ngModel)]="tareaEditando.descripcion"></ion-input>
   </ion-item>
 
-  <!-- Boton para añadir tareas -->
-  <ion-button (click)="clickBotonInsertar()" >Añadir Tarea</ion-button>
-  <!-- Boton para editar tarea, visible si existe tarea seleccionada -->
-  <ion-button *ngIf="idTareaSelec" (click)="clickBotonEditar()" >Editar Tarea</ion-button>
-  <!-- Boton para borrar tarea, visible si existe tarea seleccionada  -->
-  <ion-button *ngIf="idTareaSelec" (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
 
   <!-- Mostramos la lista de tareas -->
   <h1>LISTA DE TAREAS</h1>
@@ -47,5 +41,11 @@
     </ion-item>
   </ion-list>
 
+  <!-- boton ion-fab-button -->
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button (click)="clickAddTarea()" aria-label="Añadir nuevo elemento">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+ </ion-fab>
   
 </ion-content>
