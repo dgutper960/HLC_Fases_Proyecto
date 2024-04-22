@@ -45,7 +45,7 @@ export class DetallePage implements OnInit {
     })
   }
 
-  // Edita la tarea seleccionada
+  // Inserta una tarea en la colección de firestore
   clickBotonInsertar() {
     // Accedemos al método insretar de la interface implementada en firestore.service.ts
     // Recordamos sus parámetros de entrada

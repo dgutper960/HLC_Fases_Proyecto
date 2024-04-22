@@ -26,11 +26,14 @@
     </ion-item>
 
     <!-- Boton para insertar tarea, visible si se pulsó el boton + en home -->
-    <ion-button *ngIf="id==='Asignación Automática'" (click)="clickBotonInsertar()" >Insertar Tarea</ion-button>
+    <ion-button *ngIf="id==='Asignación Automática'" 
+    (click)="clickBotonInsertar()" >Insertar Tarea</ion-button>
     <!-- Boton para editar tarea, visible si existe tarea seleccionada -->
-    <ion-button *ngIf="id!=='Asignación Automática'" (click)="clickBotonEditar()" >Editar Tarea</ion-button>
+    <ion-button *ngIf="id!=='Asignación Automática'" 
+    (click)="clickBotonEditar()" >Editar Tarea</ion-button>
     <!-- Boton para borrar tarea, visible si existe tarea seleccionada  -->
-    <ion-button *ngIf="id!=='Asignación Automática'" (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
+    <ion-button *ngIf="id!=='Asignación Automática'" 
+    (click)="clickBotonBorrar()" >Borrar Tarea</ion-button>
 
 
 </ion-content>
