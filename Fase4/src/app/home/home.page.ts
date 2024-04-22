@@ -56,8 +56,8 @@ export class HomePage {
 
   // Redirecciona a detalle para añadir nueva tarea
   clickAddTarea(){
-    // limpiamos las tareas seleccinadas 
-    this.idTareaSelec = "Insertando";
+    // limpiamos los detalles de las tareas seleccinadas 
+    this.idTareaSelec = "Asignación Automática"; // Este elemento no debe ser cadena vacía o null
     this.tareaEditando.titulo = ""; 
     this.tareaEditando.descripcion = "";
     // Redirigimos a /detalle
