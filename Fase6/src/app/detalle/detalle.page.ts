@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 // Importaciones desde nuestro proyecto
 import { Tarea } from '../tarea';
 import { FirestoreService } from '../firestore.service';
+import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 
 @Component({
   selector: 'app-detalle',
@@ -21,7 +22,18 @@ export class DetallePage implements OnInit {
     data: {} as Tarea
   };
 
-  constructor(private alertController: AlertController, private router: Router, private activatedRouter: ActivatedRoute, private firestoreService: FirestoreService) { }
+  // Almacena el contenido de la imagen en formato Base64
+  imagenSelec: string = "";
+
+  constructor(
+    private alertController: AlertController, 
+    private router: Router, 
+    private activatedRouter: ActivatedRoute, 
+    private firestoreService: FirestoreService,
+    private loadingController: LoadingController,
+    private toastController: ToastController,
+    private imagePicker: ImagePicker
+  ) { }
 
   ngOnInit() {
     // // Almacenamos el id recibido de home
@@ -109,6 +121,37 @@ export class DetallePage implements OnInit {
       // Redirigimos al usuario a /home
       this.router.navigate(['/home']);
     })
+  }
+
+  // Seleccinar imagen
+  async seleccionarImagen(){
+    // comprobamos poermisos de lectura
+    this.imagePicker.hasReadPermission().then(
+      (results)=>{
+        // conrol del flujo segun permisos
+        if(results == false){
+          this.imagePicker.requestReadPermission();
+        }else{
+          // Abrimos selector de imagenes
+          this.imagePicker.getPictures({
+            maximumImagesCount: 1,  // limite de imágenes
+            outputType: 1  // = Base64
+          }).then( 
+            (results) => { // las imagenes seleccinadas están en results
+              if(results > 0){ // existen imágenes
+                // Almacenamos la imagen a la propiedad de la clase
+                this.imagenSelec = "data:image/jpeg;base64,"+results[0]; // el primer indice de results 
+                console.log("Imagen que se ha seleccinado"+this.imagenSelec);
+              }
+            },
+            (err)=>{
+              console.log(err)
+            }
+          );
+        }
+      }, (err)=>{
+        console.log(err)
+      });
   }
 
 }
