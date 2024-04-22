@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>detalle</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
+
+  <h1>Datos de la tarea seleccionada</h1>
+  <h1>ID: {{id}}</h1>
+  <h2>Titulo: {{document.data.titulo}}</h2>
+  <h2>Descripción: {{document.data.descripcion}}</h2>
+  <br>
+  <h1>Tarea en edición: </h1>
+    <!-- Input del titulo -->
+    <ion-item>
+      <ion-label><b>Titulo</b></ion-label>
+      <ion-input [(ngModel)]="document.data.titulo"></ion-input>
+    </ion-item>
+  <!-- Input de la descripción -->
+    <ion-item>
+      <ion-label><b>Descripción</b></ion-label>
+      <ion-input [(ngModel)]="document.data.descripcion"></ion-input>
+    </ion-item>
+
+    <!-- Boton para insertar tarea, visible si se pulsó el boton + en home -->
+    <ion-button *ngIf="id==='Asignación Automática'" 
+    (click)="clickBotonInsertar()" >Insertar Tarea</ion-button>
+    <!-- Boton para editar tarea, visible si existe tarea seleccionada -->
+    <ion-button *ngIf="id!=='Asignación Automática'" 
+    (click)="clickBotonEditar()" >Editar Tarea</ion-button>
+    <!-- Boton para borrar tarea, visible si existe tarea seleccionada  -->
+    <ion-button *ngIf="id!=='Asignación Automática'" 
+    (click)="confirmarBorrado()" >Borrar Tarea</ion-button>
+
+
+</ion-content>
