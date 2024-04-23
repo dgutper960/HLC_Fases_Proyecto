@@ -124,6 +124,39 @@ export class DetallePage implements OnInit {
     })
   }
 
+  // Alert para subir iamgen
+  //-> boton para cancelar
+  //-> boton para selecciionar
+  //-> boton para subir
+  // async alertSubidaImagen() {
+  //   const alert = await this.alertController.create({
+  //     header: 'Subir una Imagen',
+  //     message: 'Debe seleccinar una imagen',
+  //     buttons: [{
+  //       text: 'Cancelar',
+  //       role: 'cancel',
+  //       cssClass: 'secondary',
+  //       handler: () => {
+  //         console.log('Borrado cancelado');
+  //       }
+  //     }, {
+  //       text: 'Seleccionar Imagen',
+  //       handler: () => {
+  //         // Llamada a seleccionar
+  //         this.seleccionarImagen();
+  //       }
+  //     }, {
+  //       text: 'Subir Imagen',
+  //       handler: () => {
+  //         // Llamada a seleccionar
+  //         this.subirImagen();
+  //       }
+  //     }
+  //   ]
+  //   });
+  //   await alert.present();
+  // }
+
   // Seleccinar imagen
   async seleccionarImagen() {
     // comprobamos poermisos de lectura

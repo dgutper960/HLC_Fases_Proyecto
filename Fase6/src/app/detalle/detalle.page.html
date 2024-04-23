@@ -30,10 +30,23 @@
     (click)="clickBotonInsertar()" >Insertar Tarea</ion-button>
     <!-- Boton para editar tarea, visible si existe tarea seleccionada -->
     <ion-button *ngIf="id!=='Asignación Automática'" 
-    (click)="clickBotonEditar()" >Editar Tarea</ion-button>
+    (click)="clickBotonEditar()" color="warning" >Editar Tarea</ion-button>
     <!-- Boton para borrar tarea, visible si existe tarea seleccionada  -->
     <ion-button *ngIf="id!=='Asignación Automática'" 
-    (click)="confirmarBorrado()" >Borrar Tarea</ion-button>
+    (click)="confirmarBorrado()" color="danger">Borrar Tarea</ion-button>
+
+    <br><br>
+    <h1>Acciones de imágenes</h1>
+    <br>
+ <!-- Boton para subir imagen -->
+ <ion-button 
+ (click)="seleccionarImagen()" >Selecciona Imagen</ion-button>
+ <!-- Boton para subir imagen -->
+ <ion-button 
+ (click)="subirImagen()" >Subir Imagen</ion-button>
+ <!-- Boton para borrar archivo -->
+ <ion-button 
+ (click)="eliminarArchivo(document.data.imagenURL)" color="danger">Borrar Archivo</ion-button>
 
 
 </ion-content>

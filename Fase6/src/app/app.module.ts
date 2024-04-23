@@ -22,5 +22,6 @@ import {AngularFireStorageModule} from '@angular/fire/compat/storage'
       ImagePicker,
       { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
  ],
+ bootstrap: [AppComponent]
 })
 export class AppModule {}
