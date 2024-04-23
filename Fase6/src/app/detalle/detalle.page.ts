@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
 // Importaciones desde nuestro proyecto
 import { Tarea } from '../tarea';
 import { FirestoreService } from '../firestore.service';
-import { ImagePicker } from '@awesome-cordova-plugins/image-picker/ngx';
+
 
 @Component({
   selector: 'app-detalle',
@@ -26,9 +27,9 @@ export class DetallePage implements OnInit {
   imagenSelec: string = "";
 
   constructor(
-    private alertController: AlertController, 
-    private router: Router, 
-    private activatedRouter: ActivatedRoute, 
+    private alertController: AlertController,
+    private router: Router,
+    private activatedRouter: ActivatedRoute,
     private firestoreService: FirestoreService,
     private loadingController: LoadingController,
     private toastController: ToastController,
@@ -111,7 +112,7 @@ export class DetallePage implements OnInit {
       }]
     });
     await alert.present();
- }
+  }
 
   // Funcion que borra una tarea de la colecion por id
   // Después de borrar, redirige a home
@@ -124,34 +125,85 @@ export class DetallePage implements OnInit {
   }
 
   // Seleccinar imagen
-  async seleccionarImagen(){
+  async seleccionarImagen() {
     // comprobamos poermisos de lectura
     this.imagePicker.hasReadPermission().then(
-      (results)=>{
+      (results) => {
         // conrol del flujo segun permisos
-        if(results == false){
+        if (results == false) {
           this.imagePicker.requestReadPermission();
-        }else{
+        } else {
           // Abrimos selector de imagenes
           this.imagePicker.getPictures({
             maximumImagesCount: 1,  // limite de imágenes
             outputType: 1  // = Base64
-          }).then( 
+          }).then(
             (results) => { // las imagenes seleccinadas están en results
-              if(results > 0){ // existen imágenes
+              if (results > 0) { // existen imágenes
                 // Almacenamos la imagen a la propiedad de la clase
-                this.imagenSelec = "data:image/jpeg;base64,"+results[0]; // el primer indice de results 
-                console.log("Imagen que se ha seleccinado"+this.imagenSelec);
+                this.imagenSelec = "data:image/jpeg;base64," + results[0]; // el primer indice de results 
+                console.log("Imagen que se ha seleccinado" + this.imagenSelec);
               }
             },
-            (err)=>{
+            (err) => {
               console.log(err)
             }
           );
         }
-      }, (err)=>{
+      }, (err) => {
         console.log(err)
       });
+  }
+
+  // Sube imagen a Firebase
+  async subirImagen() {
+    // Feedback de espera al usuario
+    const loading = await this.loadingController.create({
+      message: 'Subiendo imagen ...'
+    });
+    // Feedback de éxito al subir
+    const toast = await this.toastController.create({
+      message: 'Imagen subida correctamente',
+      duration: 3000
+    });
+
+    // Carpeta dónde se almacena la imagen en FireStore
+    let nombreCarpeta = "imagenes";
+    // Mostramos el mensaje de espera
+    loading.present();
+    // Añadimos hecha/hora al nosmbre de la imagen
+    // Evita nombres duplicados
+    let nombreImagen = `${new Date().getTime()}`;
+    // Llamamos al método de firestore.service para subir imagen
+    this.firestoreService.subirImagenBase64(nombreCarpeta, nombreImagen, this.imagenSelec)
+      .then(snapshot => {
+        snapshot.ref.getDownloadURL()
+          .then(downloadURL => {
+            // depuración
+            console.log(`url del la imagen: ${downloadURL}`);
+            // Obtenemos la url de la imagen
+            this.document.data.imagenURL = downloadURL;
+            // ocultamos el mensaje de espera
+            loading.dismiss();
+            // Mostramos el mensaje de finalizado
+            toast.present();
+          });
+      });
+  }
+
+  // Elimina una imagen de Firestore por URL
+  async eliminarArchivo(fileURL: string){
+    const toast = await this.toastController.create({
+      message: 'Archivo borrado con éxito',
+      duration: 3000
+    });
+    // Llamamos al método de forestoreService para elimimar ficheros
+    this.firestoreService.eliminarPorURL(fileURL)
+    .then(()=>{
+      toast.present();
+    }, (err)=>{
+      console.log(err);
+    });
   }
 
 }
