@@ -52,6 +52,7 @@ export class DetallePage implements OnInit {
       if (resultado.payload.data() != null) {
         this.document.id = resultado.payload.id;
         this.document.data = resultado.payload.data();
+        this.imagenSelec = this.document.data.imagenURL;
         // mostramos algo por consola
         console.log(this.document.data.titulo);
       } else {
@@ -124,44 +125,14 @@ export class DetallePage implements OnInit {
     })
   }
 
-  // Alert para subir iamgen
-  //-> boton para cancelar
-  //-> boton para selecciionar
-  //-> boton para subir
-  // async alertSubidaImagen() {
-  //   const alert = await this.alertController.create({
-  //     header: 'Subir una Imagen',
-  //     message: 'Debe seleccinar una imagen',
-  //     buttons: [{
-  //       text: 'Cancelar',
-  //       role: 'cancel',
-  //       cssClass: 'secondary',
-  //       handler: () => {
-  //         console.log('Borrado cancelado');
-  //       }
-  //     }, {
-  //       text: 'Seleccionar Imagen',
-  //       handler: () => {
-  //         // Llamada a seleccionar
-  //         this.seleccionarImagen();
-  //       }
-  //     }, {
-  //       text: 'Subir Imagen',
-  //       handler: () => {
-  //         // Llamada a seleccionar
-  //         this.subirImagen();
-  //       }
-  //     }
-  //   ]
-  //   });
-  //   await alert.present();
-  // }
 
   // Seleccinar imagen
   async seleccionarImagen() {
+    console.log("Hola 1º console");
     // comprobamos poermisos de lectura
     this.imagePicker.hasReadPermission().then(
       (results) => {
+        console.log(results);
         // conrol del flujo segun permisos
         if (results == false) {
           this.imagePicker.requestReadPermission();
@@ -172,7 +143,9 @@ export class DetallePage implements OnInit {
             outputType: 1  // = Base64
           }).then(
             (results) => { // las imagenes seleccinadas están en results
-              if (results > 0) { // existen imágenes
+              console.log(`Results: ${results}`);
+              console.log(`Indice de Results: ${results[0]}`);
+              if (results.length > 0) { // existen imágenes
                 // Almacenamos la imagen a la propiedad de la clase
                 this.imagenSelec = "data:image/jpeg;base64," + results[0]; // el primer indice de results 
                 console.log("Imagen que se ha seleccinado" + this.imagenSelec);
