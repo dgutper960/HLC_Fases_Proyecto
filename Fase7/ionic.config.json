@@ -1,7 +1,0 @@
-{
-  "name": "2.1_proyecto_ejemplo_firestore",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
