@@ -128,7 +128,6 @@ export class DetallePage implements OnInit {
 
   // Seleccinar imagen
   async seleccionarImagen() {
-    console.log("Hola 1º console");
     // comprobamos poermisos de lectura
     this.imagePicker.hasReadPermission().then(
       (results) => {
@@ -142,9 +141,7 @@ export class DetallePage implements OnInit {
             maximumImagesCount: 1,  // limite de imágenes
             outputType: 1  // = Base64
           }).then(
-            (results) => { // las imagenes seleccinadas están en results
-              console.log(`Results: ${results}`);
-              console.log(`Indice de Results: ${results[0]}`);
+            (results) => { // las imagenes seleccinad             console.log(`Indice de Results: ${results[0]}`);
               if (results.length > 0) { // existen imágenes
                 // Almacenamos la imagen a la propiedad de la clase
                 this.imagenSelec = "data:image/jpeg;base64," + results[0]; // el primer indice de results 
@@ -199,6 +196,9 @@ export class DetallePage implements OnInit {
 
   // Elimina una imagen de Firestore por URL
   async eliminarArchivo(fileURL: string){
+    // borramos la imagen de la tarea
+    this.document.data.imagenURL = "";
+    // Borramos la imagen de FireStore
     const toast = await this.toastController.create({
       message: 'Archivo borrado con éxito',
       duration: 3000

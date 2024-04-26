@@ -14,9 +14,21 @@
 
   <!-- Imagen de la tarea -->
 
-    <img src="{{imagenSelec}}" height="200px" alt="imagen" />
+    <img src="{{imagenSelec}}" *ngIf="document.data.imagenURL!==''||imagenSelec!==''" height="200px" alt="imagen" />
+    <h3 *ngIf="document.data.imagenURL===''">Selecciona una imagen para la tarea</h3>
 
+    <h1>Acciones para la imagen</h1>
+    <br />
+    <!-- Boton para subir imagen -->
+    <ion-button (click)="seleccionarImagen()">Selecciona Imagen</ion-button>
+    <!-- Boton para subir imagen -->
+    <ion-button (click)="subirImagen()">Subir Imagen</ion-button>
+    <!-- Boton para borrar archivo -->
+    <ion-button (click)="eliminarArchivo(document.data.imagenURL)" color="danger"
+      >Borrar Imagen</ion-button
+    >
 
+<h1>Edición de la Tarea</h1>
   <!-- Input del titulo -->
   <ion-item>
     <ion-label><b>Titulo</b></ion-label>
@@ -50,14 +62,5 @@
   >
 
   <br /><br />
-  <h1>Acciones de imágenes</h1>
-  <br />
-  <!-- Boton para subir imagen -->
-  <ion-button (click)="seleccionarImagen()">Selecciona Imagen</ion-button>
-  <!-- Boton para subir imagen -->
-  <ion-button (click)="subirImagen()">Subir Imagen</ion-button>
-  <!-- Boton para borrar archivo -->
-  <ion-button (click)="eliminarArchivo(document.data.imagenURL)" color="danger"
-    >Borrar Imagen</ion-button
-  >
+
 </ion-content>
