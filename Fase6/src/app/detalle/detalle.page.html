@@ -15,7 +15,7 @@
   <!-- Imagen de la tarea -->
 
     <img src="{{imagenSelec}}" *ngIf="document.data.imagenURL!==''||imagenSelec!==''" height="200px" alt="imagen" />
-    <h3 *ngIf="document.data.imagenURL===''">Selecciona una imagen para la tarea</h3>
+    <h3 *ngIf="document.data.imagenURL===''&&imagenSelec===''">Selecciona una imagen para la tarea</h3>
 
     <h1>Acciones para la imagen</h1>
     <br />
